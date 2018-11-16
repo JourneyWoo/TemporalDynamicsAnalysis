@@ -36,3 +36,7 @@ def data_process(data_path):
 
 if __name__ == '__main__':
     print 'Great!'
+    values_dict = data_process('/Users/wuzhenglin/PycharmProjects/TemporalDynamicsAnalysis-data/'
+                              'latent-hawkes-data/201705-07_qualified-repo-event.csv')
+    print len(values_dict)
+
