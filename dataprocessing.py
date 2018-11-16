@@ -1,6 +1,9 @@
 import pandas as pd
 
 
+def takeSecond(elem):
+    return elem[1]
+
 def time2second(str):
     hour = int(str[0:2])
     mi = int(str[3:5])
@@ -38,5 +41,36 @@ if __name__ == '__main__':
     print 'Great!'
     values_dict = data_process('/Users/wuzhenglin/PycharmProjects/TemporalDynamicsAnalysis-data/'
                               'latent-hawkes-data/201705-07_qualified-repo-event.csv')
-    print len(values_dict)
+
+    values = []
+    for d in values_dict:
+        if len(values_dict[d]) < 3:
+            continue
+        temp = []
+        for item in values_dict[d]:
+            tem = [item[2], item[1]]
+            temp.append(tem)
+        values.append(temp)
+
+    sequences = []
+    for t1 in values:
+        t1.sort(key=takeSecond)
+        t = []
+        for te in t1:
+            t.append([te[0]])
+        sequences.append(t)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

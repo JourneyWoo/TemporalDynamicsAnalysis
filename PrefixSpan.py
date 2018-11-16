@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 #author: Tianming Lu
 #adapted by: Nicolas Rangeon
+from dataprocessing import data_process,takeSecond
 
 class PrefixSpan:
 
@@ -181,14 +182,31 @@ class PrefixSpan:
 
 if __name__ == "__main__":
 
-	sequences = [
-		[[1,2],[3]],
-		[[1],[3,2],[1,2]],
-		[[1,2],[5]],
-		[[6]],
-	]
+	print 'PrefixSpan Section'
 
-	model = PrefixSpan.train(sequences, minSupport=0.5, maxPatternLength=5)
+	values_dict = data_process('/Users/wuzhenglin/PycharmProjects/TemporalDynamicsAnalysis-data/'
+							   'latent-hawkes-data/201705-07_qualified-repo-event.csv')
+
+	values = []
+	for d in values_dict:
+		if len(values_dict[d]) < 3:
+			continue
+		temp = []
+		for item in values_dict[d]:
+			tem = [item[2], item[1]]
+			temp.append(tem)
+		values.append(temp)
+
+	sequences = []
+	for t1 in values:
+		t1.sort(key=takeSecond)
+		t = []
+		for te in t1:
+			t.append([te[0]])
+		sequences.append(t)
+
+
+	model = PrefixSpan.train(sequences, minSupport=0.05, maxPatternLength=6)
 	result = model.freqSequences().collect()
 	for fs in result:
 		print('{}, {}'.format(fs.sequence,fs.freq))
