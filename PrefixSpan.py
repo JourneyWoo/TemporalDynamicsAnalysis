@@ -3,6 +3,7 @@
 #author: Tianming Lu
 #adapted by: Nicolas Rangeon
 from dataprocessing import data_process,takeSecond
+import time
 
 class PrefixSpan:
 
@@ -205,9 +206,29 @@ if __name__ == "__main__":
 			t.append([te[0]])
 		sequences.append(t)
 
+	# time_save = []
+	#
+	# for i in range(8):
+	# 	support_change = 0.015 + i * 0.005
+	#
+	# 	time_start = time.time()
+	#
+	# 	model = PrefixSpan.train(sequences, minSupport=support_change, maxPatternLength=6)
+	# 	result = model.freqSequences().collect()
+	# 	# for fs in result:
+	# 	# 	print('{}, {}'.format(fs.sequence,fs.freq))
+	#
+	# 	time_end = time.time()
+	# 	time_save.append(time_end - time_start)
+	#
+	# print time_save
 
-	model = PrefixSpan.train(sequences, minSupport=0.05, maxPatternLength=6)
+	model = PrefixSpan.train(sequences, minSupport=0.01, maxPatternLength=6)
 	result = model.freqSequences().collect()
 	for fs in result:
 		print('{}, {}'.format(fs.sequence,fs.freq))
+
+
+
+
 
